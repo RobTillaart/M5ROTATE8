@@ -38,6 +38,7 @@ public:
   //  IO PART
   //  channel    = 0..7
   uint32_t getAbsCounter(uint8_t channel);
+  bool     setAbsCounter(uint8_t channel, uint32_t value);
   uint32_t getRelCounter(uint8_t channel);
   bool     getKeyPressed(uint8_t channel);
   bool     resetCounter(uint8_t channel);
@@ -59,6 +60,7 @@ private:
   bool     write8(uint8_t reg, uint8_t value);
   uint8_t  read8(uint8_t reg);
   bool     write24(uint8_t reg, uint8_t R, uint8_t G, uint8_t B);
+  bool     write32(uint8_t reg, uint32_t value);
   uint32_t read32(uint8_t reg);
 };
 

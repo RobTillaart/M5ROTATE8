@@ -91,6 +91,16 @@ uint32_t M5ROTATE8::getAbsCounter(uint8_t channel)
 }
 
 
+bool M5ROTATE8::setAbsCounter(uint8_t channel, uint32_t value)
+{
+  // if (channel > 7)
+  // {
+    // return M5ROTATE8_ERR_CHANNEL;
+  // }
+  return write32(M5ROTATE8_REG_BASE_ABS + (channel << 2), value);
+}
+
+
 uint32_t M5ROTATE8::getRelCounter(uint8_t channel)
 {
   // if (channel > 7)
@@ -194,6 +204,22 @@ bool M5ROTATE8::write24(uint8_t reg, uint8_t R, uint8_t G, uint8_t B)
 }
 
 
+bool M5ROTATE8::write32(uint8_t reg, uint32_t value)
+{
+  _wire->beginTransmission(_address);
+  _wire->write(reg);
+  _wire->write(value & 0xFF);
+  value >>= 8;
+  _wire->write(value & 0xFF);
+  value >>= 8;
+  _wire->write(value & 0xFF);
+  value >>= 8;
+  _wire->write(value);
+  _error = _wire->endTransmission();
+  return (_error == 0);
+}
+
+
 uint32_t M5ROTATE8::read32(uint8_t reg)
 {
   _wire->beginTransmission(_address);
@@ -210,13 +236,10 @@ uint32_t M5ROTATE8::read32(uint8_t reg)
     return 0;
   }
   uint32_t value = 0;
-  value += _wire->read();
-  value <<= 8;
-  value += _wire->read();
-  value <<= 8;
-  value += _wire->read();
-  value <<= 8;
-  value += _wire->read();
+  value += (_wire->read());
+  value += (_wire->read() << 8 );
+  value += (_wire->read() << 16);
+  value += (_wire->read() << 24);
   return value;
 }
 

@@ -38,7 +38,7 @@ unittest_teardown()
 
 unittest(test_constructor)
 {
-  M5ROTATE MM;
+  M5ROTATE8 MM;
 
   assertEqual(1, 1);
 }

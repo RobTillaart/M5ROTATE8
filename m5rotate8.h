@@ -20,7 +20,6 @@
 #define M5ROTATE8_ERROR                0xFFFF
 
 
-
 class M5ROTATE8
 {
 public:
@@ -48,13 +47,13 @@ public:
   //  R,G,B      = 0..255
   bool     writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B);
   bool     allOff();
-  
+
 
 private:
   uint8_t  _address;
 
   int      _error;
-  
+
   TwoWire* _wire;
 
   bool     write8(uint8_t reg, uint8_t value);

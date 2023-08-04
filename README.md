@@ -8,15 +8,22 @@
 
 # M5ROTATE8
 
-Arduino library for m5 8angle 8x12 bit potentiometers.
+Arduino library for M5 8ROTATE 8x rotary encoders
 
 
 ## Description
 
 **Experimental**
 
-M5ROTATE8 is an Arduino class 
+M5ROTATE8 is an Arduino class to read the rotary encoders of the
+M5 8ENCODER module.
+It also provides means to write RGB values to the 8 LED's in the same module.
 
+The rotary encoders can be read as an absolute counter or as an relative counter. The latter since the last read. 
+These counters can be reset per channel.
+The library can also read the key pressed status of every rotary encoder.
+
+Finally the library can set the RGB value of the 8 LEDS.
 
 No tests with hardware have been done yet, so use with care.
 Feedback welcome!
@@ -24,35 +31,53 @@ Feedback welcome!
 
 #### I2C
 
+The address range is in theory from 0..127, however the I2C specification
+states it should be between 8 and 119 as some addresses are reserved.
+The default address is 0x41.
+
 TODO to what clock does it work?
-Address range?
+|  clock  |  works  |
+|:-------:|:-------:|
+| 100 KHz |         |
+| 200 KHz |         |
+| 400 KHz |         |
+| 600 KHz |         |
+| 800 KHz |         |
+
 
 #### Related
 
-- https://github.com/RobTillaart/map2colour
+- https://github.com/RobTillaart/M5ANGLE8
 
 
 ## Interface
 
 ```cpp
-#include "M5ROTATE8.h"
+#include "m5rotate8.h"
 ```
 
-- **M5ROTATE8(uint8_t address = 0x43, TwoWire \*wire = &Wire)** constructor.
-Default address = 0x43, default Wire.
+- **M5ROTATE8(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS, TwoWire \*wire = &Wire)** constructor.
+Default address = 0x41, default Wire.
 - **bool begin(int sda, int scl)** ESP32 et al.
 - **bool begin()** initialize I2C, check if connected.
 - **bool isConnected()** checks if address is on the I2C bus.
-- **bool setAddress(uint8_t address)** set a new address for the device.
+- **bool setAddress(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS)** set a new address for the device.
+Default address = 0x41.
 - **uint8_t getAddress()** convenience function. 
 - **uint8_t getVersion()** get firmware version from device.
 
 #### IO part
 
-- **uint16_t analogRead(uint8_t channel, uint8_t resolution = 12)**
-Read a potentiometer, if resolution = 8 (0..255) otherwise (0..4095).
+- **uint32_t getAbsCounter(uint8_t channel)**
+Read a absolute position of the rotary encoder since reset or start.
+- **uint32_t getRelCounter(uint8_t channel)**
+Read a relative position of the rotary encoder since reset.
+Note: this counter will reset after each read.
+- **bool getKeyPressed(uint8_t channel)** get key status of the rotary encoder.
+True is pressed.
+- **bool resetCounter(uint8_t channel)** reset a rotary encoder.
 - **uint8_t inputSwitch()** read status of the switch.
-- **bool writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B, uint8_t brightness)** Set the RGB value and brightness of a LED.
+- **bool writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B)** Set the RGB value of a LED.
 - **bool allOff()** switches all LEDs off.
 
 
@@ -62,10 +87,7 @@ Read a potentiometer, if resolution = 8 (0..255) otherwise (0..4095).
 
 - improve documentation
 - test with hardware
-
-TODO before release
-- magic numbers
-
+- keep in sync with M5ANGLE8 where possible.
 
 #### Should
 
@@ -76,9 +98,8 @@ TODO before release
 - add examples
 - add unit tests
 - check performance
-- caching?
-- **writeBrightness(channel)**
-
+- **uint32_t readRGB(uint8_t channel)**
+- **resetAll()**
 
 #### Wont (unless)
 

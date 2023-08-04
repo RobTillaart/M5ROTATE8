@@ -38,7 +38,7 @@ unittest_teardown()
 
 unittest(test_constructor)
 {
-  M5ROTATE8_LIB_VERSION MM;
+  M5ROTATE MM;
 
   assertEqual(1, 1);
 }

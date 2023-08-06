@@ -1,6 +1,6 @@
 {
   "name": "M5ROTATE8",
-  "keywords": "M5ROTATE8, rotary, encoder",
+  "keywords": "M5ROTATE8,rotary,encoder,8encoder",
   "description": "Arduino library for M5 8ROTATE 8x rotary encoders.",
   "authors":
   [

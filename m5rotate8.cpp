@@ -81,7 +81,7 @@ uint8_t M5ROTATE8::getVersion()
 //
 //  INPUT PART
 //
-uint32_t M5ROTATE8::getAbsCounter(uint8_t channel)
+int32_t M5ROTATE8::getAbsCounter(uint8_t channel)
 {
   // if (channel > 7)
   // {
@@ -91,7 +91,7 @@ uint32_t M5ROTATE8::getAbsCounter(uint8_t channel)
 }
 
 
-bool M5ROTATE8::setAbsCounter(uint8_t channel, uint32_t value)
+bool M5ROTATE8::setAbsCounter(uint8_t channel, int32_t value)
 {
   // if (channel > 7)
   // {
@@ -101,7 +101,7 @@ bool M5ROTATE8::setAbsCounter(uint8_t channel, uint32_t value)
 }
 
 
-uint32_t M5ROTATE8::getRelCounter(uint8_t channel)
+int32_t M5ROTATE8::getRelCounter(uint8_t channel)
 {
   // if (channel > 7)
   // {
@@ -129,6 +129,15 @@ bool M5ROTATE8::resetCounter(uint8_t channel)
   }
   write8(M5ROTATE8_REG_BASE_RESET + channel, 1);
   return true;
+}
+
+
+void M5ROTATE8::resetAll()
+{
+  for (int channel = 0; channel < 8; channel++)
+  {
+    write8(M5ROTATE8_REG_BASE_RESET + channel, 1);
+  }
 }
 
 
@@ -237,9 +246,9 @@ uint32_t M5ROTATE8::read32(uint8_t reg)
   }
   uint32_t value = 0;
   value += (_wire->read());
-  value += (_wire->read() << 8 );
-  value += (_wire->read() << 16);
-  value += (_wire->read() << 24);
+  value += (((uint32_t)_wire->read()) << 8 );
+  value += (((uint32_t)_wire->read()) << 16);
+  value += (((uint32_t)_wire->read()) << 24);
   return value;
 }
 

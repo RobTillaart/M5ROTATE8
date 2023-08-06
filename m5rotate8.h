@@ -37,11 +37,12 @@ public:
 
   //  IO PART
   //  channel    = 0..7
-  uint32_t getAbsCounter(uint8_t channel);
-  bool     setAbsCounter(uint8_t channel, uint32_t value);
-  uint32_t getRelCounter(uint8_t channel);
+  int32_t  getAbsCounter(uint8_t channel);
+  bool     setAbsCounter(uint8_t channel, int32_t value);
+  int32_t  getRelCounter(uint8_t channel);
   bool     getKeyPressed(uint8_t channel);
   bool     resetCounter(uint8_t channel);
+  void     resetAll();
 
   uint8_t  inputSwitch();
   //  channel    = 0..7

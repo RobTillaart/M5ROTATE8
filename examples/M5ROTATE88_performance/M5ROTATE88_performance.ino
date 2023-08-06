@@ -69,6 +69,13 @@ void setup()
   delay(100);
 
   start = micros();
+  MM.setAbsCounter(1, 1000);
+  stop = micros();
+  Serial.print("setAbsCounter:\t");
+  Serial.println(stop - start);
+  delay(100);
+
+  start = micros();
   x = MM.resetCounter(1);
   stop = micros();
   Serial.print("resetCounter:\t");

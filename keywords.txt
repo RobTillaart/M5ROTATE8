@@ -12,9 +12,11 @@ getAddress	KEYWORD2
 getVersion	KEYWORD2
 
 getAbsCounter	KEYWORD2
+setAbsCounter	KEYWORD2
 getRelCounter	KEYWORD2
 getKeyPressed	KEYWORD2
 resetCounter	KEYWORD2
+resetAll	KEYWORD2
 
 inputSwitch	KEYWORD2
 

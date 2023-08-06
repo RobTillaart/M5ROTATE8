@@ -8,19 +8,21 @@
 
 # M5ROTATE8
 
-Arduino library for M5 8ROTATE 8x rotary encoders
+Arduino library for M5 8ROTATE 8x rotary encoders.
 
 
 ## Description
 
 **Experimental**
 
-M5ROTATE8 is an Arduino class to read the rotary encoders of the
+M5ROTATE8 is an Arduino class to read the 8 rotary encoders of the
 M5 8ENCODER module.
 It also provides means to write RGB values to the 8 LED's in the same module.
 
-The rotary encoders can be read as an absolute counter or as an relative counter. The latter since the last read. 
-These counters can be reset per channel.
+The rotary encoders can be read as an absolute counter (since start) or as an relative counter (since last time read). 
+The value can be both positive and negative.
+The absolute counter can be given an initial value.
+The counters can be reset per channel.
 The library can also read the key pressed status of every rotary encoder.
 
 Finally the library can set the RGB value of the 8 LEDS.
@@ -68,14 +70,16 @@ Default address = 0x41.
 
 #### IO part
 
-- **uint32_t getAbsCounter(uint8_t channel)**
+- **int32_t getAbsCounter(uint8_t channel)**
 Read a absolute position of the rotary encoder since reset or start.
-- **uint32_t getRelCounter(uint8_t channel)**
+- **void setAbsCounter(uint8_t channel, int32_t value);
+- **int32_t getRelCounter(uint8_t channel)**
 Read a relative position of the rotary encoder since reset.
 Note: this counter will reset after each read.
 - **bool getKeyPressed(uint8_t channel)** get key status of the rotary encoder.
 True is pressed.
 - **bool resetCounter(uint8_t channel)** reset a rotary encoder.
+- **void resetAll()** reset all counters to 0.
 - **uint8_t inputSwitch()** read status of the switch.
 - **bool writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B)** Set the RGB value of a LED.
 - **bool allOff()** switches all LEDs off.
@@ -92,6 +96,9 @@ True is pressed.
 #### Should
 
 - error handling
+- optimize low level calls
+  - merge into two functions => read/write array + length.
+  - resetAll() could be "one call"
 
 #### Could
 
@@ -99,7 +106,7 @@ True is pressed.
 - add unit tests
 - check performance
 - **uint32_t readRGB(uint8_t channel)**
-- **resetAll()**
+  - write/readAllRGB() ? less overhead?
 
 #### Wont (unless)
 

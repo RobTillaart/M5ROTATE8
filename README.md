@@ -28,10 +28,15 @@ The library can also read the key pressed status of every rotary encoder.
 The library can read the state of the mini switch.
 
 The library can set the RGB value of the 9 LEDS.
-The RotatyEncoder module has no brightness,
+The RotatyEncoder module has no brightness, like the 8ANGLe unit.
 
-No tests with hardware have been done yet, so use with care.
-Feedback welcome!
+First tests with hardware have been done. 
+One strange observation, the RE makes steps of size 2 and occasionally size 1.
+This needs investigation, so use with care.
+
+Missing is an interrupt signal e.g. on change.
+
+Feedback is welcome!
 
 
 #### I2C
@@ -49,13 +54,13 @@ The default address is **0x41** or **65**.
 
 See log file performance sketch.
 
+
 #### Accuracy
 
-The rotary encoders show a step size of 2 and sometimes a step size of 1. This needs investigation.
-
-The overall behaviour looks good, there are 30 steps per rotation.
-
-Missing is an interrupt signal e.g. on change.
+The overall behaviour looks not too bad, there are 30 steps per rotation.
+The rotary encoders show a step size of 2 and sometimes a step size of 1.
+So normally one rotation gives +60 or -60.
+The step size needs investigation as I would expect step size 1, always.
 
 
 #### Related
@@ -74,7 +79,7 @@ Missing is an interrupt signal e.g. on change.
 - **M5ROTATE8(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS, TwoWire \*wire = &Wire)** constructor.
 Default address = 0x41, default Wire.
 - **bool begin(int sda, int scl)** ESP32 et al.
-- **bool begin()** initialize I2C, check if connected.
+- **bool begin()** initialize I2C, checks if connected.
 - **bool isConnected()** checks if address is on the I2C bus.
 - **bool setAddress(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS)** set a new address for the device.
 Default address = 0x41.
@@ -115,6 +120,8 @@ channel = 0..8
 
 - improve documentation
 - keep in sync with **M5ANGLE8** where possible.
+- investigate step size 2 / 1.
+  - An easy patch: divide by 2 resulting in step size 1 or 0
 
 #### Should
 

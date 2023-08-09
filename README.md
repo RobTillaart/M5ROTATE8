@@ -28,13 +28,16 @@ The library can also read the key pressed status of every rotary encoder.
 The library can read the state of the mini switch.
 
 The library can set the RGB value of the 9 LEDS.
-The RotatyEncoder module has no brightness, like the 8ANGLe unit.
+The RotaryEncoder module has no brightness, like the 8ANGLe unit does.
 
 First tests with hardware have been done. 
-One strange observation, the RE makes steps of size 2 and occasionally size 1.
-This needs investigation, so use with care.
+**Warning:** One strange observation, the RE makes steps of size 2 and occasionally step size 1.
+This needs further investigation, so use with care.
 
-Missing is an interrupt signal e.g. on change.
+Missing in the device is an interrupt signal e.g. on change. 
+One has to poll all channels for changes which is not efficient. 
+A single byte register that showed change since last read would allow to monitor 
+all 8 rotary encoders in one call.  
 
 Feedback is welcome!
 

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.2.0] 2023-08-08
-- testing with hardware led to a majorupgrade
+- testing with hardware led to a major upgrade
 - fix keyPressed
 - fix read32
 - add setAbsCounter example.

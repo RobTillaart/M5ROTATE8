@@ -25,7 +25,7 @@ void setup()
 
 void loop()
 {
-  for (int ch = 0; ch < 2; ch++)
+  for (int ch = 0; ch < 8; ch++)
   {
     Serial.print(MM.getRelCounter(ch));
     Serial.print("\t");

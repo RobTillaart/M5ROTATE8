@@ -247,10 +247,10 @@ uint32_t M5ROTATE8::read32(uint8_t reg)
     return 0;
   }
   uint32_t value = 0;
-  value |= (_wire->read());
-  value |= (((uint32_t)_wire->read()) << 8 );
-  value |= (((uint32_t)_wire->read()) << 16);
-  value |= (((uint32_t)_wire->read()) << 24);
+  value += (_wire->read());
+  value += (((uint32_t)_wire->read()) << 8 );
+  value += (((uint32_t)_wire->read()) << 16);
+  value += (((uint32_t)_wire->read()) << 24);
   return value;
 }
 

@@ -37,12 +37,21 @@ First tests with hardware have been done.
 **Warning:** One strange observation, the RE makes steps of size 2 and occasionally step size 1.
 This needs further investigation, so use with care.
 
-Missing in the device is an interrupt signal e.g. on change. 
-One has to poll all channels for changes which is not efficient. 
-A single byte register that showed change since last read would allow to monitor 
-all 8 rotary encoders in one call.  
 
 Feedback is welcome!
+
+#### Missing V1
+
+The device has no interrupt signal e.g. on change. However since firmware version V2
+the device allows to read one register to see changes on all channels. 
+(not tested with hardware yet).
+
+
+#### Breaking change
+
+Version 0.4.0 added support for Firmware V2 functions. See below.
+If your hardware has firmware V1 these won't work.
+
 
 #### Breaking change
 
@@ -127,8 +136,20 @@ True is pressed.
 
 - **bool writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B)** Set the RGB value of a specific LED.  
 channel = 0..8
+- **uint32_t readRGB(uint8_t channel)** read back the RGB value as an 32 bits integer.
 - **bool setAll(uint8_t R, uint8_t G, uint8_t B)** set all LEDs.
 - **bool allOff()** switches all LEDs off.
+
+
+#### Firmware V2 functions
+
+New content in registers 0x58..0x5F, 0x61, 0x62.  
+Needs testing.
+
+- **void setButtonToggleCount(uint8_t channel, uint8_t value = 0)**
+- **uint8_t getButtonToggleCount(uint8_t channel)**
+- **uint8_t getButtonChangeMask()**
+- **uint8_t getEncoderChangeNask()**
 
 
 ## Future
@@ -143,16 +164,14 @@ channel = 0..8
 
 #### Should
 
+- test firmware V2 functions with hardware.
 - error handling
 - optimize low level calls
   - merge into two functions => read/write array + length.
   - resetAll() could be "one call"
-- **bool readRGB(channel, &R, &G, &B)**
-  - or **uint32_t readRGB(uint8_t channel)**
 - improve on return values of functions.
 - improve performance
 - investigate address changes
-
 
 #### Could
 
@@ -160,9 +179,9 @@ channel = 0..8
   - digital lock
 - add unit tests
 
-
 #### Wont (unless)
 
+- **bool readRGB(channel, &R, &G, &B)**
 
 ## Support
 

@@ -1,7 +1,7 @@
 //
 //    FILE: M5ROTATE8_performance.ino
 //  AUTHOR: Rob Tillaart
-// PURPOSE: meansurement performance
+// PURPOSE: measurement performance
 //     URL: https://github.com/RobTillaart/M5ROTATE8
 
 

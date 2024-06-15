@@ -88,6 +88,11 @@ The step size needs investigation as I would expect step size 1, always.
 
 #### Related
 
+Manufacturer
+- https://github.com/m5stack/M5Unit-8Encoder/issues/1 (encoder)
+- https://github.com/m5stack/M5Unit-8Encoder-Internal-FW  (firmware)
+
+Libraries
 - https://github.com/RobTillaart/M5ANGLE8
 - https://github.com/RobTillaart/M5ROTATE8
 - https://github.com/RobTillaart/rotaryDecoder

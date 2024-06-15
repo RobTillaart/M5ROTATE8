@@ -8,18 +8,21 @@
 
 #include "m5rotate8.h"
 
-
+//  FIRMWARE V1 REGISTERS
 #define M5ROTATE8_REG_ADDRESS               0xFF
 #define M5ROTATE8_REG_VERSION               0xFE
 #define M5ROTATE8_REG_BASE_ABS              0x00
 #define M5ROTATE8_REG_BASE_REL              0x20
 #define M5ROTATE8_REG_BASE_RESET            0x40
 #define M5ROTATE8_REG_BASE_BUTTON_VALUE     0x50
-#define M5ROTATE8_REG_BASE_BUTTON_TOGGLE    0x58
 #define M5ROTATE8_REG_SWITCH                0x60
+#define M5ROTATE8_REG_RGB                   0x70
+
+//  FIRMWARE V2 REGISTERS
+#define M5ROTATE8_REG_BASE_BUTTON_TOGGLE    0x58
 #define M5ROTATE8_REG_ENCODER_MASK          0x61
 #define M5ROTATE8_REG_BUTTON_MASK           0x62
-#define M5ROTATE8_REG_RGB                   0x70
+
 
 
 M5ROTATE8::M5ROTATE8(uint8_t address, TwoWire *wire)

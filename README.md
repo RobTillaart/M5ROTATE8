@@ -116,6 +116,7 @@ User must call wire.begin() before this one.
 can be found on the I2C bus.
 - **bool setAddress(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS)** set a new address for the device.
 Default address = 0x41.
+Returns false if address < 10 or above 119.
 - **uint8_t getAddress()** convenience function to get the set address.
 - **uint8_t getVersion()** get the firmware version from device.
 

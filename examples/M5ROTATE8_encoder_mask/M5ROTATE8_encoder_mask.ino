@@ -10,7 +10,6 @@
 
 M5ROTATE8 MM;
 
-int sum = 0;
 
 void setup()
 {

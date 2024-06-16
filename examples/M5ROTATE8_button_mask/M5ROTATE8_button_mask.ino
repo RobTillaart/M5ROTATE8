@@ -10,7 +10,6 @@
 
 M5ROTATE8 MM;
 
-int sum = 0;
 
 void setup()
 {
@@ -27,20 +26,16 @@ void setup()
 
 void loop()
 {
+  //  Note: mask is inverted register.
   uint8_t mask = MM.getButtonChangeMask();
   if (mask != 0)
   {
     for (int button = 0; button < 8; button++)
     {
-      if (mask & (1 << button))
-      {
-        Serial.print("Button ");
-        Serial.print(button);
-        Serial.print(" changed to ");
-
-        //  read and process button state.
-        Serial.println(MM.getKeyPressed(button));
-      }
+      Serial.print("Button ");
+      Serial.print(button);
+      Serial.print(" has state ");
+      Serial.println((mask & (1 << button)) > 0);
     }
   }
 }

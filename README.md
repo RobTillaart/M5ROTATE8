@@ -89,7 +89,8 @@ The step size needs investigation as I would expect step size 1, always.
 #### Related
 
 Manufacturer
-- https://github.com/m5stack/M5Unit-8Encoder/issues/1 (encoder)
+- https://github.com/m5stack/M5Unit-8Encoder
+- https://github.com/m5stack/M5Unit-8Encoder/issues/1 (V2 extensions)
 - https://github.com/m5stack/M5Unit-8Encoder-Internal-FW  (firmware)
 
 Libraries
@@ -111,39 +112,44 @@ Libraries
 Default address = 0x41, default Wire.
 - **bool begin()** checks if address is on the I2C bus.
 User must call wire.begin() before this one.
-- **bool isConnected()** checks if address is on the I2C bus.
+- **bool isConnected()** checks if the address given in the constructor, or by setAddress(), 
+can be found on the I2C bus.
 - **bool setAddress(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS)** set a new address for the device.
 Default address = 0x41.
-- **uint8_t getAddress()** convenience function. 
-- **uint8_t getVersion()** get firmware version from device.
+- **uint8_t getAddress()** convenience function to get the set address.
+- **uint8_t getVersion()** get the firmware version from device.
 
 
 #### Rotary encoder part
 
 - **int32_t getAbsCounter(uint8_t channel)**
-Read a absolute position of the rotary encoder since reset or start.
-- **void setAbsCounter(uint8_t channel, int32_t value);
+Read the absolute or cumulative position of the rotary encoder since reset or start.
+Note this can be positive or negative or zero.
+- **void setAbsCounter(uint8_t channel, int32_t value)** allows to set an initial value
+e.g. so it matches a setting or value in your application.
 - **int32_t getRelCounter(uint8_t channel)**
 Read a relative position of the rotary encoder since reset.
+Note this can be positive or negative or zero.
 Note: this counter will reset after each read.
-- **bool getKeyPressed(uint8_t channel)** get key status of the rotary encoder.
-True is pressed.
+- **bool getKeyPressed(uint8_t channel)** get the status of the key of the rotary encoder.
+True (1) is pressed, False (0) is not pressed.
 - **bool resetCounter(uint8_t channel)** reset a rotary encoder.
-- **void resetAll()** reset all counters to 0.
+- **void resetAll()** reset all rotary encoder counters to 0.
 
 
 #### Input switch part
 
-- **uint8_t inputSwitch()** read status of the switch.
+- **uint8_t inputSwitch()** read the status of the micro switch.
 
 
 #### LED part
 
 - **bool writeRGB(uint8_t channel, uint8_t R, uint8_t G, uint8_t B)** Set the RGB value of a specific LED.  
-channel = 0..8
-- **uint32_t readRGB(uint8_t channel)** read back the RGB value as an 32 bits integer.
-- **bool setAll(uint8_t R, uint8_t G, uint8_t B)** set all LEDs.
-- **bool allOff()** switches all LEDs off.
+channel = 0..8 as there is one more LED than rotary encoders.
+- **uint32_t readRGB(uint8_t channel)** read back the RGB value of specified LED as an 32 bits integer.
+The value is 0x00RRGGBB.
+- **bool setAll(uint8_t R, uint8_t G, uint8_t B)** set all LEDs to the specified RGB value.
+- **bool allOff()** switches all LEDs off, RGB = (0,0,0).
 
 
 #### Firmware V2 functions
@@ -156,14 +162,16 @@ Write a starting value to the toggle counters.
 - **uint8_t getButtonToggleCount(uint8_t channel)** Button toggle counting.
 To be used to see if button has been pressed and released, optionally multiple times.
 Reset to zero after reading.
-- **uint8_t getButtonChangeMask()** 0 = not pressed, 1 = pressed.
-To be used to check all 8 buttons in one call. 
+- **uint8_t getButtonChangeMask()** returns a bit mask for all 8 buttons, 
+bit 0 = not pressed, bit 1 = pressed.
+To be used to check all 8 buttons in just one call. 
 This is much faster than reading them separately one by one.
 Note that this function inverts the datasheetV2 specification as it seems more logical.
-- **uint8_t getEncoderChangeMask()** 0 = no change, 1 = changed.
+- **uint8_t getEncoderChangeMask()** returns a bit mask for all 8 rotary encoders.
+Bit 0 = no change, bit 1 = changed.
 To be used to check all 8 encoders in one call. 
 This is much faster than reading them separately one by one.
-Resets to zero after reading. 
+Resets the whole mask (register) to zero after reading. 
 
 
 ## Future
@@ -175,7 +183,6 @@ Resets to zero after reading.
 - investigate step size 2 / 1.
   - An easy patch: divide by 2 resulting in step size 1 or 0
 
-
 #### Should
 
 - test firmware V2 functions with hardware.
@@ -183,8 +190,9 @@ Resets to zero after reading.
 - optimize low level calls
   - merge into two functions => read/write array + length.
   - resetAll() could be "one call"
-- improve performance
-- investigate address changes
+  - does this affect performance?
+- improve performance (how?)
+- extend performance example with V2 functions
 
 #### Could
 

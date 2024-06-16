@@ -54,7 +54,7 @@ public:
   bool     allOff();
 
 
-  //       FIRMWARE V2 functions
+  //       FIRMWARE V2 functions (to be verified)
   //       use getVersion() to check.
   //       channel = 0..7
   //       value   = 0..255
@@ -62,9 +62,12 @@ public:
   bool     setButtonToggleCount(uint8_t channel, uint8_t value = 0);
   uint8_t  getButtonToggleCount(uint8_t channel);
   //       register 0x61, 0x62
+  //       0 = no change, 1 = changed
   uint8_t  getEncoderChangeMask();
+  //       0 = not pressed, 1 = pressed (inverted the datasheetV2 specification)
+  //       seems to be more logical.
   uint8_t  getButtonChangeMask();
-  
+
 
 private:
   uint8_t  _address;

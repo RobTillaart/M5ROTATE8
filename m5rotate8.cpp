@@ -186,15 +186,19 @@ uint8_t M5ROTATE8::getButtonToggleCount(uint8_t channel)
 }
 
 
+//  0 = no change, 1 = changed
 uint8_t M5ROTATE8::getEncoderChangeMask()
 {
   return read8(M5ROTATE8_REG_ENCODER_MASK);
 }
 
 
+//  0 = not pressed, 1 = pressed (inverted the datasheetV2 specification)
+//  seems more logical
 uint8_t M5ROTATE8::getButtonChangeMask()
 {
-  return read8(M5ROTATE8_REG_BUTTON_MASK);
+  //  invert register to be more logical IMHO.
+  return read8(M5ROTATE8_REG_BUTTON_MASK) ^ 0xFF;
 }
 
 

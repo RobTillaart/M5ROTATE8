@@ -148,13 +148,22 @@ channel = 0..8
 
 #### Firmware V2 functions
 
-New content in registers 0x58..0x5F, 0x61, 0x62.  
-Needs testing.
+New content in registers 0x58 - 0x5F, 0x61, 0x62.  
+Needs testing with hardware.
 
 - **void setButtonToggleCount(uint8_t channel, uint8_t value = 0)**
-- **uint8_t getButtonToggleCount(uint8_t channel)**
-- **uint8_t getButtonChangeMask()**
-- **uint8_t getEncoderChangeNask()**
+Write a starting value to the toggle counters.
+- **uint8_t getButtonToggleCount(uint8_t channel)** Button toggle counting.
+To be used to see if button has been pressed and released, optionally multiple times.
+Reset to zero after reading.
+- **uint8_t getButtonChangeMask()** 0 = not pressed, 1 = pressed.
+To be used to check all 8 buttons in one call. 
+This is much faster than reading them separately one by one.
+Note that this function inverts the datasheetV2 specification as it seems more logical.
+- **uint8_t getEncoderChangeMask()** 0 = no change, 1 = changed.
+To be used to check all 8 encoders in one call. 
+This is much faster than reading them separately one by one.
+Resets to zero after reading. 
 
 
 ## Future
@@ -174,7 +183,6 @@ Needs testing.
 - optimize low level calls
   - merge into two functions => read/write array + length.
   - resetAll() could be "one call"
-- improve on return values of functions.
 - improve performance
 - investigate address changes
 

@@ -18,39 +18,44 @@ Arduino library for M5 8ROTATE 8x rotary encoders.
 
 **Experimental**
 
-M5ROTATE8 is an Arduino class to read the 8 rotary encoders of the
-M5 8ENCODER module.
-It also provides means to write RGB values to the 8 LED's in the same module.
+M5ROTATE8 is an Arduino library to read the 8 rotary encoders of the
+M5 8ENCODER device.
+It also provides means to write RGB values to the 9 LED's in the same module.
 
-The rotary encoders can be read as an absolute counter (since start or reset) or as an relative counter (since last time read). 
-The value can be both positive and negative depending on the direction of turns.
-The absolute counters can be given an initial value.
-The counters can be reset per channel.
-The library can also read the key pressed status of every rotary encoder.
+The rotary encoders can be read as an absolute counter, since start or reset, 
+or as a relative counter since last time read. 
+These values can be both positive and negative depending on the direction of the turns.
+The absolute counters can be given an initial value e.g. to match some value in your project.
+These counters can be reset per channel.
 
-The library can read the state of the mini switch.
+Furthermore the library can read the key pressed status of every rotary encoder.
+These can be used e.g. to switch mode from fine to coarse and back.
 
 The library can set the RGB value of the 9 LEDS.
 The RotaryEncoder module has no brightness, like the 8ANGLe unit does.
+
+Finally the library can read the state of the mini switch.
 
 First tests with hardware have been done. 
 **Warning:** One strange observation, the RE makes steps of size 2 and occasionally step size 1.
 This needs further investigation, so use with care.
 
-
 Feedback is welcome!
 
-#### Missing V1
+#### Missing in V1
 
 The device has no interrupt signal e.g. on change. However since firmware version V2
-the device allows to read one register to see changes on all channels. 
-(not tested with hardware yet).
+the device allows to read one register to see changes on all rotary encoders and one 
+registers to see all the button states. These enhancements improve interaction most
+of the time.
+
+Note: V2 is not tested with hardware yet.
 
 
 #### Breaking change
 
 Version 0.4.0 added support for Firmware V2 functions. See below.
-If your hardware has firmware V1 these won't work.
+If your hardware has firmware V1 these functions won't work.
 
 
 #### Breaking change
@@ -65,7 +70,9 @@ before calling **begin()**.
 #### I2C
 
 The address range is in theory from 0..127, however the I2C specification
-states it should be between 8 and 119 as some addresses are reserved.
+states it should be between 8 and 119 as some addresses are reserved,
+or have special meaning.
+
 The default address is **0x41** or **65**.
 
 |  clock  |  works  |  notes  |
@@ -116,7 +123,7 @@ User must call wire.begin() before this one.
 can be found on the I2C bus.
 - **bool setAddress(uint8_t address = M5ROTATE8_DEFAULT_ADDRESS)** set a new address for the device.
 Default address = 0x41.
-Returns false if address < 10 or above 119.
+Returns false if address < 8 or above 119.
 - **uint8_t getAddress()** convenience function to get the set address.
 - **uint8_t getVersion()** get the firmware version from device.
 

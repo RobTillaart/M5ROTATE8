@@ -48,7 +48,7 @@ bool M5ROTATE8::isConnected()
 
 bool M5ROTATE8::setAddress(uint8_t address)
 {
-  if ((address < 10) || (address > 119)) return false;
+  if ((address < 8) || (address > 119)) return false;
   _address = address;
   write8(M5ROTATE8_REG_ADDRESS, _address);
   return isConnected();
@@ -264,9 +264,11 @@ uint32_t M5ROTATE8::read24(uint8_t reg)
     return 0;
   }
   uint32_t value = 0;
-  value += (_wire->read());
-  value += (((uint32_t)_wire->read()) << 8 );
-  value += (((uint32_t)_wire->read()) << 16);
+  value += _wire->read();
+  value <<= 8;
+  value += _wire->read();
+  value <<= 8;
+  value += _wire->read();
   return value;
 }
 

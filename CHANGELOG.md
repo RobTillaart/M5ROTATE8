@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - **uint8_t getButtonToggleCount(uint8_t channel)**
   - **uint8_t getButtonRegister()**
   - **uint8_t getEncoderChangeFlag()**
+- improved **setAddress()**
 - add examples
 - update readme.md
 - minor edits
